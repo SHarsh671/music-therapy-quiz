@@ -3,239 +3,313 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 <style>
-*{
-box-sizing:border-box;
-margin:0;
-padding:0;
+*{box-sizing:border-box;margin:0;padding:0;}
+
+:root{
+  --yellow:#FFD600;
+  --yellow-dark:#F5C400;
+  --yellow-light:#FFF8CC;
+  --black:#111111;
+  --grey:#1E1E1E;
+  --grey2:#2C2C2C;
+  --text-on-black:#F0F0F0;
+  --text-muted:#999;
+  --correct-bg:#0F3D1F;
+  --correct-border:#22c55e;
+  --correct-text:#6EE7A0;
+  --wrong-bg:#3D0F0F;
+  --wrong-border:#ef4444;
+  --wrong-text:#FCA5A5;
 }
 
 body{
-font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-background:#f5f7fb;
-color:#1e293b;
-padding:20px;
-display:flex;
-justify-content:center;
-align-items:flex-start;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--black);
+  color:var(--text-on-black);
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:0 0 40px 0;
 }
 
-#app {
-width:100%;
-max-width:700px;
-display:flex;
-flex-direction:column;
+/* TITLE HEADER */
+.site-header{
+  width:100%;
+  background:var(--yellow);
+  padding:18px 20px 16px;
+  text-align:center;
+  border-bottom:4px solid var(--black);
 }
 
-.sr-only{
-position:absolute;
-width:1px;
-height:1px;
-padding:0;
-margin:-1px;
-overflow:hidden;
-clip:rect(0,0,0,0);
-white-space:nowrap;
-border:0;
+.site-header h1{
+  font-size:clamp(18px, 5vw, 26px);
+  font-weight:800;
+  color:var(--black);
+  letter-spacing:-0.5px;
+  line-height:1.2;
 }
 
+.site-header p{
+  font-size:12px;
+  color:rgba(0,0,0,0.55);
+  margin-top:4px;
+  font-weight:500;
+}
+
+/* MAIN CONTENT */
+#app{
+  width:100%;
+  max-width:680px;
+  padding:16px 16px 0;
+  display:flex;
+  flex-direction:column;
+}
+
+/* STICKY CONTROLS */
 .header{
-position:sticky;
-top:0;
-background:#f5f7fb;
-padding-bottom:10px;
-z-index:10;
+  position:sticky;
+  top:0;
+  background:var(--black);
+  padding:12px 0 8px;
+  z-index:10;
+  border-bottom:2px solid var(--grey2);
+  margin-bottom:14px;
 }
 
-button{
-cursor:pointer;
-font-size:14px;
-padding:8px 14px;
-border-radius:8px;
-border:1px solid #d8dee8;
-background:white;
-transition:all .15s ease;
-}
-
-button:hover{
-background:#eef2ff;
-border-color:#c7d2fe;
-}
-
-button.active{
-background:#4f46e5;
-color:white;
-border-color:#4f46e5;
-}
-
+/* SCORE BAR */
 .score-bar{
-display:flex;
-gap:10px;
-flex-wrap:wrap;
-margin-bottom:14px;
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-bottom:10px;
 }
 
 .stat{
-background:white;
-padding:8px 14px;
-border-radius:10px;
-font-size:13px;
-box-shadow:0 2px 6px rgba(0,0,0,0.05);
+  background:var(--grey);
+  padding:7px 14px;
+  border-radius:20px;
+  font-size:13px;
+  font-weight:600;
+  color:var(--yellow);
+  border:1px solid var(--grey2);
 }
 
+/* CONTROLS */
 .controls{
-display:flex;
-flex-wrap:wrap;
-gap:8px;
-margin-bottom:14px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-bottom:10px;
 }
 
-.topics {
-display:flex;
-flex-wrap:wrap;
-gap:8px;
-justify-content:center;
-margin-bottom:18px;
+button{
+  cursor:pointer;
+  font-size:13px;
+  font-weight:600;
+  padding:7px 13px;
+  border-radius:8px;
+  border:1.5px solid var(--grey2);
+  background:var(--grey);
+  color:var(--text-on-black);
+  transition:all .15s ease;
+  -webkit-tap-highlight-color:transparent;
+}
+
+button:hover{
+  border-color:var(--yellow);
+  color:var(--yellow);
+}
+
+button.active{
+  background:var(--yellow);
+  color:var(--black);
+  border-color:var(--yellow);
+}
+
+/* TOPIC PILLS */
+.topics{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-bottom:10px;
 }
 
 .topic-pill{
-font-size:12px;
-padding:5px 10px;
-border-radius:20px;
-border:1px solid #d8dee8;
-background:white;
-color:#475569;
+  font-size:11px;
+  padding:5px 10px;
+  border-radius:20px;
+  border:1.5px solid var(--grey2);
+  background:var(--grey);
+  color:var(--text-muted);
+  font-weight:600;
 }
 
 .topic-pill.on{
-background:#4f46e5;
-color:white;
-border-color:#4f46e5;
+  background:var(--yellow);
+  color:var(--black);
+  border-color:var(--yellow);
 }
 
+/* PROGRESS BAR */
 .progress{
-height:6px;
-background:#e5e7eb;
-border-radius:6px;
-overflow:hidden;
-margin-bottom:20px;
+  height:5px;
+  background:var(--grey2);
+  border-radius:6px;
+  overflow:hidden;
 }
 
 .progress-fill{
-height:100%;
-background:#4f46e5;
-transition:width .3s;
+  height:100%;
+  background:var(--yellow);
+  transition:width .35s;
 }
 
+/* QUESTION CARD */
 .q-card{
-width:100%;
-background:white;
-border-radius:14px;
-padding:22px;
-box-shadow:0 6px 16px rgba(0,0,0,0.08);
-animation:fadeIn .25s ease;
+  width:100%;
+  background:var(--grey);
+  border-radius:16px;
+  padding:22px 20px;
+  border:1.5px solid var(--grey2);
+  animation:fadeUp .2s ease;
 }
 
-@keyframes fadeIn{
-from{opacity:0;transform:translateY(8px);}
-to{opacity:1;transform:translateY(0);}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(10px);}
+  to{opacity:1;transform:translateY(0);}
 }
 
 .q-meta{
-font-size:12px;
-color:#64748b;
-margin-bottom:10px;
+  display:inline-block;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.5px;
+  text-transform:uppercase;
+  color:var(--black);
+  background:var(--yellow);
+  padding:3px 10px;
+  border-radius:20px;
+  margin-bottom:12px;
 }
 
 .q-text{
-font-size:16px;
-line-height:1.5;
-margin-bottom:16px;
+  font-size:16px;
+  line-height:1.55;
+  margin-bottom:18px;
+  color:var(--text-on-black);
+  font-weight:500;
 }
 
-.tf-row{
-display:flex;
-gap:10px;
-}
+/* ANSWER OPTIONS */
+.tf-row{display:flex;gap:10px;}
 
-.options{
-display:flex;
-flex-direction:column;
-gap:10px;
-}
+.options{display:flex;flex-direction:column;gap:8px;}
 
 .opt{
-text-align:left;
-padding:12px 16px;
-border-radius:10px;
-border:1px solid #d8dee8;
-background:#f8fafc;
-font-size:15px;
-transition:all .15s;
+  text-align:left;
+  padding:12px 16px;
+  border-radius:10px;
+  border:1.5px solid var(--grey2);
+  background:#252525;
+  font-size:14px;
+  color:var(--text-on-black);
+  transition:all .15s;
+  width:100%;
+  font-weight:500;
 }
 
-.opt:hover{
-background:#eef2ff;
+.opt:hover:not(:disabled){
+  border-color:var(--yellow);
+  color:var(--yellow);
+  background:#1E1E00;
 }
 
 .opt.correct{
-background:#e7f7ed;
-border-color:#22c55e;
-color:#166534;
+  background:var(--correct-bg);
+  border-color:var(--correct-border);
+  color:var(--correct-text);
 }
 
 .opt.wrong{
-background:#fde8e8;
-border-color:#ef4444;
-color:#991b1b;
+  background:var(--wrong-bg);
+  border-color:var(--wrong-border);
+  color:var(--wrong-text);
 }
 
+/* EXPLANATION */
 .explanation{
-margin-top:12px;
-font-size:14px;
-padding:12px 14px;
-background:#f1f5f9;
-border-radius:8px;
+  margin-top:14px;
+  font-size:13px;
+  line-height:1.55;
+  padding:12px 14px;
+  background:#1A1A1A;
+  border-left:3px solid var(--yellow);
+  border-radius:0 8px 8px 0;
+  color:#ccc;
 }
 
+/* NAV */
 .nav{
-display:flex;
-align-items:center;
-gap:8px;
-margin-top:14px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-top:14px;
 }
 
 .nav-info{
-margin-left:auto;
-font-size:13px;
-color:#64748b;
+  margin-left:auto;
+  font-size:13px;
+  color:var(--text-muted);
+  font-weight:600;
 }
 
+/* DONE CARD */
 .done-card{
-text-align:center;
-padding:40px 20px;
-background:white;
-border-radius:16px;
-box-shadow:0 6px 16px rgba(0,0,0,0.08);
+  text-align:center;
+  padding:50px 24px;
+  background:var(--grey);
+  border-radius:16px;
+  border:1.5px solid var(--grey2);
+  animation:fadeUp .3s ease;
 }
 
 .done-score{
-font-size:44px;
-font-weight:600;
-margin-bottom:10px;
+  font-size:58px;
+  font-weight:800;
+  color:var(--yellow);
+  margin-bottom:8px;
+  line-height:1;
 }
 
 .done-msg{
-color:#64748b;
-margin-bottom:20px;
+  color:var(--text-muted);
+  margin-bottom:24px;
+  font-size:16px;
+  font-weight:500;
 }
+
+/* MOBILE TWEAKS */
+@media(max-width:480px){
+  .site-header h1{font-size:18px;}
+  #app{padding:12px 12px 0;}
+  .q-text{font-size:15px;}
+  .opt{font-size:13px;padding:11px 13px;}
+  .done-score{font-size:48px;}
+  .controls{gap:5px;}
+  button{font-size:12px;padding:6px 11px;}
+  .tf-row{gap:8px;}
+  .tf-row .opt{flex:1;}
+}
+
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
 </style>
 
-<h2 class="sr-only">Music therapy 2MU3 exam quiz</h2>
-<h1 style="text-align:center;margin:10px 0 25px;font-size:28px;font-weight:600;">
-Music Therapy 2MU3 Exam Quiz
-</h1>
+<div class="site-header">
+  <h1>Music Therapy 2MU3 Prac</h1>
+  <p>-</p>
+</div>
 
 <div id="app"></div>
 
@@ -306,6 +380,7 @@ const ALL_QUESTIONS = [
 
   {topic:"Depression",type:"tf",q:"In 'Active vs Receptive Group MT for MDD,' there was an equal number of drop-outs in all groups.",a:false,exp:"Drop-out rates were NOT equal across the active, receptive, and control groups."},
   {topic:"Depression",type:"mc",q:"Which acted as the control group in the 'Active vs Receptive Group MT for MDD' study?",opts:["No treatment","Individual counselling","Group counselling","Medication only"],a:2,exp:"Group counselling served as the active control group in this study."},
+  {topic:"Depression",type:"mc",q:"Active interventions in the MDD study included:",opts:["Music listening and relaxation","Songwriting and lyric analysis","Drumming and improvisation","Group singing and movement"],a:2,exp:"Active group = drumming + improvisation."},
   {topic:"Depression",type:"mc",q:"Receptive interventions in the MDD study included:",opts:["Drumming and improvisation","Music listening and Guided Imagery only","Lyric analysis and songwriting","Group singing and movement"],a:1,exp:"Receptive group = music listening + Guided Imagery only."},
 
   {topic:"Palliative Care",type:"tf",q:"Significant improvement was found in pain, anxiety, depression, and shortness of breath in the palliative MT outcomes study.",a:true,exp:"Gallagher et al (2018) found significant improvements across these domains with ~96% positive response rate."},
@@ -341,172 +416,162 @@ const ALL_QUESTIONS = [
   {topic:"Misc / Other",type:"tf",q:"The most common MT intervention as per readings is listening through headphones.",a:false,exp:"Listening through headphones is NOT the most common MT intervention."},
   {topic:"Misc / Other",type:"mc",q:"What is music therapy?",opts:["Playing music for patients","The use of music within a therapeutic relationship to achieve individualized goals","Any music used in a healthcare setting","Music medicine delivered by any clinician"],a:1,exp:"MT must be within a therapeutic relationship, by a credentialed MTA, with individualized goals."},
 ];
+
 const TOPICS = [...new Set(ALL_QUESTIONS.map(q => q.topic))];
 
 let state = {
-topicsOn: new Set(TOPICS),
-typeFilter: 'all',
-missedOnly: false,
-shuffled: false,
-deck: [],
-current: 0,
-answered: null,
-score: 0,
-total: 0,
-missed: new Set(),
-done: false
+  topicsOn: new Set(TOPICS),
+  typeFilter: 'all',
+  missedOnly: false,
+  shuffled: false,
+  deck: [],
+  current: 0,
+  answered: null,
+  score: 0,
+  total: 0,
+  missed: new Set(),
+  done: false
 };
 
 function shuffleArray(arr){
-for(let i=arr.length-1;i>0;i--){
-const j=Math.floor(Math.random()*(i+1));
-[arr[i],arr[j]]=[arr[j],arr[i]];
-}
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
 }
 
 function buildDeck(){
-let qs = ALL_QUESTIONS.filter(q => state.topicsOn.has(q.topic));
-
-if(state.typeFilter==='tf') qs = qs.filter(q=>q.type==='tf');
-if(state.typeFilter==='mc') qs = qs.filter(q=>q.type==='mc');
-
-if(state.missedOnly){
-qs = qs.filter(q=>state.missed.has(ALL_QUESTIONS.indexOf(q)));
-}
-
-if(state.shuffled) shuffleArray(qs);
-
-state.deck = qs;
-state.current = 0;
-state.answered = null;
-state.score = 0;
-state.total = 0;
-state.done = false;
+  let qs = ALL_QUESTIONS.filter(q => state.topicsOn.has(q.topic));
+  if(state.typeFilter==='tf') qs = qs.filter(q=>q.type==='tf');
+  if(state.typeFilter==='mc') qs = qs.filter(q=>q.type==='mc');
+  if(state.missedOnly) qs = qs.filter(q=>state.missed.has(ALL_QUESTIONS.indexOf(q)));
+  if(state.shuffled) shuffleArray(qs);
+  state.deck = qs;
+  state.current = 0;
+  state.answered = null;
+  state.score = 0;
+  state.total = 0;
+  state.done = false;
 }
 
 function confetti(){
-for(let i=0;i<80;i++){
-const c=document.createElement("div");
-c.style.position="fixed";
-c.style.width="8px";
-c.style.height="8px";
-c.style.background=`hsl(${Math.random()*360},70%,60%)`;
-c.style.left=Math.random()*100+"vw";
-c.style.top="-10px";
-c.style.zIndex="9999";
-c.style.transition="transform 1.5s linear, opacity 1.5s";
-document.body.appendChild(c);
-
-setTimeout(()=>{
-c.style.transform=`translateY(100vh) rotate(${Math.random()*360}deg)`;
-c.style.opacity=0;
-},10);
-
-setTimeout(()=>c.remove(),1600);
+  for(let i=0;i<80;i++){
+    const c=document.createElement("div");
+    c.style.cssText=`position:fixed;width:9px;height:9px;left:${Math.random()*100}vw;top:-10px;z-index:9999;border-radius:2px;transition:transform 1.6s linear,opacity 1.6s;`;
+    c.style.background=['#FFD600','#ffffff','#111111','#FFEC66','#FFA500'][Math.floor(Math.random()*5)];
+    document.body.appendChild(c);
+    setTimeout(()=>{c.style.transform=`translateY(105vh) rotate(${Math.random()*360}deg)`;c.style.opacity=0;},10);
+    setTimeout(()=>c.remove(),1700);
+  }
 }
+
+function applyAnswerStyles(){
+  const q=state.deck[state.current];
+  if(state.answered===null) return;
+  const btns=document.querySelectorAll('.opt');
+  if(q.type==='tf'){
+    btns.forEach(b=>{
+      const val = b.dataset.val==='true';
+      if(val===q.a){b.classList.add('correct');}
+      else if(val===state.answered){b.classList.add('wrong');}
+    });
+  } else {
+    btns.forEach((b,i)=>{
+      if(i===q.a){b.classList.add('correct');}
+      else if(i===state.answered){b.classList.add('wrong');}
+    });
+  }
 }
 
 function render(){
-const app=document.getElementById('app');
-const q=state.deck[state.current];
-const pct=state.deck.length ? Math.round(((state.current+1)/state.deck.length)*100) : 0;
+  const app=document.getElementById('app');
+  const q=state.deck[state.current];
+  const pct=state.deck.length ? Math.round(((state.current)/state.deck.length)*100) : 0;
 
-let html=`<div class="header">
+  let html=`<div class="header">
+    <div class="score-bar">
+      <div class="stat">⭐ ${state.score}/${state.total}</div>
+      <div class="stat">📚 ${state.deck.length} questions</div>
+    </div>
+    <div class="controls">
+      <button onclick="setType('all')" class="${state.typeFilter==='all'?'active':''}">All</button>
+      <button onclick="setType('tf')" class="${state.typeFilter==='tf'?'active':''}">T/F</button>
+      <button onclick="setType('mc')" class="${state.typeFilter==='mc'?'active':''}">MC</button>
+      <button onclick="toggleShuffle()" class="${state.shuffled?'active':''}">🔀 Shuffle</button>
+      <button onclick="toggleMissed()" class="${state.missedOnly?'active':''}">❌ Missed${state.missed.size?` (${state.missed.size})`:''}</button>
+      <button onclick="resetQuiz()">↺ Reset</button>
+    </div>
+    <div class="topics">
+      ${TOPICS.map(t=>`<button class="topic-pill ${state.topicsOn.has(t)?'on':''}" onclick="toggleTopic('${t}')">${t}</button>`).join('')}
+    </div>
+    <div class="progress"><div class="progress-fill" style="width:${pct}%"></div></div>
+  </div>`;
 
-<div class="score-bar">
-<div class="stat">Score: ${state.score}/${state.total}</div>
-<div class="stat">Questions: ${state.deck.length}</div>
-</div>
+  if(state.done||!q){
+    const pct2=state.total>0?Math.round((state.score/state.total)*100):0;
+    html+=`<div class="done-card">
+      <div class="done-score">${state.score}/${state.total}</div>
+      <div class="done-msg">${pct2>=80?'🎉 Crushed it!':pct2>=60?'👍 Nice work!':'📖 Keep studying!'} (${pct2}%)</div>
+      <button onclick="resetQuiz()">↺ Restart</button>
+    </div>`;
+    app.innerHTML=html;
+    return;
+  }
 
-<div class="controls">
-<button onclick="setType('all')" class="${state.typeFilter==='all'?'active':''}">All</button>
-<button onclick="setType('tf')" class="${state.typeFilter==='tf'?'active':''}">TF</button>
-<button onclick="setType('mc')" class="${state.typeFilter==='mc'?'active':''}">MC</button>
-<button onclick="toggleShuffle()" class="${state.shuffled?'active':''}">Shuffle</button>
-<button onclick="toggleMissed()" class="${state.missedOnly?'active':''}">
-Missed ${state.missed.size?`(${state.missed.size})`:''}
-</button>
-<button onclick="resetQuiz()">Reset</button>
-</div>
+  const answered=state.answered!==null;
 
-<div class="topics">
-${TOPICS.map(t=>`
-<button class="topic-pill ${state.topicsOn.has(t)?'on':''}"
-onclick="toggleTopic('${t}')">${t}</button>
-`).join('')}
-</div>
+  html+=`<div class="q-card">
+    <div class="q-meta">${q.topic} · ${q.type==='tf'?'True / False':'Multiple Choice'}</div>
+    <div class="q-text">${q.q}</div>`;
 
-<div class="progress"><div class="progress-fill" style="width:${pct}%"></div></div>
+  if(q.type==='tf'){
+    html+=`<div class="tf-row">
+      <button class="opt" data-val="true" onclick="answer(true)" ${answered?'disabled':''}>✅ True</button>
+      <button class="opt" data-val="false" onclick="answer(false)" ${answered?'disabled':''}>❌ False</button>
+    </div>`;
+  } else {
+    html+=`<div class="options">`;
+    q.opts.forEach((o,i)=>{
+      html+=`<button class="opt" onclick="answer(${i})" ${answered?'disabled':''}>${o}</button>`;
+    });
+    html+=`</div>`;
+  }
 
-</div>`;
+  if(answered){
+    html+=`<div class="explanation">💡 ${q.exp}</div>`;
+  }
 
-if(state.done||!q){
-html+=`<div class="done-card">
-<div class="done-score">${state.score}/${state.total}</div>
-<div class="done-msg">Finished</div>
-<button onclick="resetQuiz()">Restart</button>
-</div>`;
-app.innerHTML=html;
-return;
-}
+  html+=`</div>
+  <div class="nav">
+    ${answered?`<button onclick="next()">Next →</button>`:''}
+    <span class="nav-info">${state.current+1} / ${state.deck.length}</span>
+  </div>`;
 
-html+=`<div class="q-card">
-<div class="q-meta">${q.topic}</div>
-<div class="q-text">${q.q}</div>`;
-
-const answered=state.answered!==null;
-
-if(q.type==='tf'){
-html+=`
-<div class="tf-row">
-<button class="opt" onclick="answer(true)" ${answered?'disabled':''}>True</button>
-<button class="opt" onclick="answer(false)" ${answered?'disabled':''}>False</button>
-</div>`;
-}else{
-html+=`<div class="options">`;
-q.opts.forEach((o,i)=>{
-html+=`<button class="opt" onclick="answer(${i})" ${answered?'disabled':''}>${o}</button>`;
-});
-html+=`</div>`;
-}
-
-if(answered){
-html+=`<div class="explanation">${q.exp}</div>`;
-}
-
-html+=`</div>
-<div class="nav">
-${answered?'<button onclick="next()">Next</button>':''}
-<span class="nav-info">${state.current+1}/${state.deck.length}</span>
-</div>`;
-
-app.innerHTML=html;
+  app.innerHTML=html;
+  if(answered) applyAnswerStyles();
 }
 
 function answer(val){
-if(state.answered!==null)return;
-const q=state.deck[state.current];
-const idx=ALL_QUESTIONS.indexOf(q);
-
-state.answered=val;
-state.total++;
-
-const correct=q.type==='tf'?val===q.a:val===q.a;
-if(correct) state.score++;
-else state.missed.add(idx);
-
-render();
+  if(state.answered!==null) return;
+  const q=state.deck[state.current];
+  const idx=ALL_QUESTIONS.indexOf(q);
+  state.answered=val;
+  state.total++;
+  const correct=val===q.a;
+  if(correct) state.score++;
+  else state.missed.add(idx);
+  render();
 }
 
 function next(){
-if(state.current<state.deck.length-1){
-state.current++;
-state.answered=null;
-}else{
-state.done=true;
-confetti();
-}
-render();
+  if(state.current<state.deck.length-1){
+    state.current++;
+    state.answered=null;
+  } else {
+    state.done=true;
+    confetti();
+  }
+  render();
 }
 
 function setType(t){state.typeFilter=t;buildDeck();render();}
@@ -514,15 +579,13 @@ function toggleShuffle(){state.shuffled=!state.shuffled;buildDeck();render();}
 function toggleMissed(){state.missedOnly=!state.missedOnly;buildDeck();render();}
 function resetQuiz(){state={...state,score:0,total:0,missed:new Set(),done:false};buildDeck();render();}
 function toggleTopic(t){
-if(state.topicsOn.has(t)&&state.topicsOn.size>1)state.topicsOn.delete(t);
-else state.topicsOn.add(t);
-buildDeck();render();
+  if(state.topicsOn.has(t)&&state.topicsOn.size>1) state.topicsOn.delete(t);
+  else state.topicsOn.add(t);
+  buildDeck();render();
 }
 
 buildDeck();
 render();
 </script>
-
 </body>
 </html>
-
